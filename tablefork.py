@@ -32,7 +32,7 @@ def table():
     with table:
         rep.modify.pose(
             position=(-135.39745, 0, -140.25696),
-            rotation=(0,-90,-90),
+            rotation=(0,0,0),
         )
     return table
 
