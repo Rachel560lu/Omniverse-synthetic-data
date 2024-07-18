@@ -25,7 +25,7 @@ def dome_lights(num=1):
     return lights.node
 
 # Import and position the table object
-TABLE_USD = "C:\Users\vipuser\Desktop\source\Desk.fbx"  # Make sure to define this variable correctly
+TABLE_USD = "C:\\Users\\vipuser\\Desktop\\source\\Desk.fbx"  # Make sure to define this variable correctly
 
 def table():
     table = rep.create.from_usd(TABLE_USD, semantics=[('class', 'table')])
@@ -56,7 +56,7 @@ render_product  = rep.create.render_product(camera1, (1024, 1024))
 render_product2  = rep.create.render_product(camera2, (512, 512))
 
 # Randomize cutlery props
-current_cultery = "C:\Users\vipuser\Desktop\source\fork.fbx"  # Define this variable correctly
+current_cultery = "C:\\Users\\vipuser\\Desktop\\source\fork.fbx"  # Define this variable correctly
 
 def cutlery_props(size=5):
     instances = rep.randomizer.instantiate(rep.utils.get_usd_files(current_cultery), size=size, mode='point_instance')
