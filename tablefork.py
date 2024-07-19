@@ -32,6 +32,8 @@ def dome_lights(num=1):
 # Define the paths to the USD files
 TABLE_USD = r"C:\Users\vipuser\Desktop\source\Desk.usd"  # Converted from Desk.fbx to Desk.usd
 FORK_USD = r"C:\Users\vipuser\Desktop\source\fork.usd"  # Converted from fork.fbx to fork.usd
+output_dir = r"C:\Users\vipuser\Desktop\generated_dataset"
+
 
 # Function to import and position the table
 def table():
@@ -39,7 +41,7 @@ def table():
     with table:
         rep.modify.pose(
             position=(-135.39745, 0, -140.25696),
-            rotation=(0, 0, 0),
+            rotation=(270, 0, 0)
         )
     return table
 
@@ -73,7 +75,7 @@ render_product1 = rep.create.render_product(camera1, (1024, 1024))
 render_product2 = rep.create.render_product(camera2, (512, 512))
 
 # Function to randomize cutlery props (if needed)
-current_cutlery = r"C:\Users\vipuser\Desktop\source\fork.usd"  # Use raw string for the path
+current_cutlery = FORK_USD # Use raw string for the path
 
 def cutlery_props(size=5):
     cutlery_files = rep.utils.get_usd_files(current_cutlery)
@@ -91,12 +93,18 @@ def load_scene():
     table()
     fork()
 
-# Trigger the randomizations
-with rep.trigger.on_frame(num_frames=50):
-    load_scene()
-    rect_lights(1)
-    dome_lights(1)
-    cutlery_props(5)
+# Set up the writer to specify the output directory
+writer = rep.WriterRegistry.get("BasicWriter")
+output_dir = r"C:\Users\vipuser\Desktop\generated_dataset"
+writer.initialize(output_dir=output_dir)
 
-# Run the simulation graph
-rep.orchestrator.run()
+# Load the scene
+load_scene()
+rect_lights(1)
+dome_lights(1)
+cutlery_props(5)
+
+# Run the orchestrator
+#rep.orchestrator.run()
+
+print(f"Datasets saved to: {output_dir}")
