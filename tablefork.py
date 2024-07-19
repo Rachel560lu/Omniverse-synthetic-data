@@ -1,4 +1,4 @@
- import omni.replicator.core as rep
+import omni.replicator.core as rep
 import omni.usd
 import omni.kit
 
@@ -97,3 +97,6 @@ with rep.trigger.on_frame(num_frames=50):
     rect_lights(1)
     dome_lights(1)
     cutlery_props(5)
+
+# Run the simulation graph
+rep.orchestrator.run()
