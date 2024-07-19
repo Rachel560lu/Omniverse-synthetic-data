@@ -1,9 +1,33 @@
-import omni.replicator.core as rep
+ import omni.replicator.core as rep
 import omni.usd
 import omni.kit
 
 # Create a new stage
 stage = omni.usd.get_context().new_stage()
+
+# Lightning setup for Rectangular light and Dome light 
+def rect_lights(num=2):
+    lights = rep.create.light(
+        light_type="rect",
+        temperature=rep.distribution.normal(6500, 500),
+        intensity=rep.distribution.normal(0, 5000),
+        position=(-131,150,-134),
+        rotation=(-90,0,0),
+        scale=rep.distribution.uniform(50, 100),
+        count=num
+    )
+    return lights.node
+
+def dome_lights(num=1):
+    lights = rep.create.light(
+        light_type="dome",
+        temperature=rep.distribution.normal(6500, 500),
+        intensity=rep.distribution.normal(0, 1000),
+        position=(0,0,0),
+        rotation=(270,0,0),
+        count=num
+    )
+    return lights.node
 
 # Define the paths to the USD files
 TABLE_USD = r"C:\Users\vipuser\Desktop\source\Desk.usd"  # Converted from Desk.fbx to Desk.usd
@@ -73,5 +97,3 @@ with rep.trigger.on_frame(num_frames=50):
     rect_lights(1)
     dome_lights(1)
     cutlery_props(5)
-
-
