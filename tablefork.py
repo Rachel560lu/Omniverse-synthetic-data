@@ -34,7 +34,6 @@ TABLE_USD = r"C:\Users\vipuser\Desktop\source\Desk.usd"  # Converted from Desk.f
 FORK_USD = r"C:\Users\vipuser\Desktop\source\fork.usd"  # Converted from fork.fbx to fork.usd
 output_dir = r"C:\Users\vipuser\Desktop\generated_dataset"
 
-
 # Function to import and position the table
 def table():
     table = rep.create.from_usd(TABLE_USD, semantics=[('class', 'table')])
@@ -96,8 +95,8 @@ def load_scene():
 # Set up the writer to specify the output directory
 writer = rep.WriterRegistry.get("BasicWriter")
 output_dir = r"C:\Users\vipuser\Desktop\generated_dataset"
-writer.initialize(output_dir=output_dir)
-writer.attach([render_product1])
+writer.initialize(output_dir=output_dir, rgb=True, bounding_box_2d_tight=True)
+writer.attach([render_product1, render_product2])  # Attach both render products
 
 # Load the scene
 load_scene()
