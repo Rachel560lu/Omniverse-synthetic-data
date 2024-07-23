@@ -1,6 +1,31 @@
 import omni.replicator.core as rep
 import omni.usd
 import omni.kit
+from pxr import Usd, UsdShade, Sdf
+
+LUGGAGE_USD = r"C:\Users\vipuser\Desktop\source\luggage\luggage.usd"  # Converted from luggage.obj to luggage.usd
+output_dir = r"C:\Users\vipuser\Desktop\generated_dataset"
+
+
+def update_texture_paths(stage, old_path, new_path):
+    for prim in stage.Traverse():
+        if prim.HasAPI(UsdShade.Shader):
+            shader = UsdShade.Shader(prim)
+            for input in shader.GetInputs():
+                if input.GetAttr().GetTypeName() == Sdf.ValueTypeNames.Asset:
+                    attr = input.GetAttr()
+                    current_path = attr.Get()
+                    if old_path in current_path:
+                        new_texture_path = current_path.replace(old_path, new_path)
+                        attr.Set(new_texture_path)
+                        print(f"Updated texture path: {current_path} -> {new_texture_path}")
+
+stage = Usd.Stage.Open(LUGGAGE_USD)
+old_texture_path = r"C:\Users\vipuser\AppData\Local\Temp\5cd98c4eec87f88c\textures"
+new_texture_path = r"C:\Users\vipuser\Desktop\textures"
+update_texture_paths(stage, old_texture_path, new_texture_path)
+stage.GetRootLayer().Save()
+
 
 # Create a new stage
 stage = omni.usd.get_context().new_stage()
@@ -28,10 +53,8 @@ def dome_lights(num=1):
         count=num
     )
     return lights.node
+    
 
-# Define the paths to the USD files
-LUGGAGE_USD = r"C:\Users\vipuser\Desktop\source\luggage\luggage.obj"  # Converted from luggage.obj to luggage.usd
-output_dir = r"C:\Users\vipuser\Desktop\generated_dataset"
 
 # Function to import and position luggages
 def luggages():
@@ -42,10 +65,8 @@ def luggages():
             rotation=(270, 0, 0)
         )
     return bags
-
-
-
-
+    
+    
 # Camera setup
 focus_distance = 50
 focal_length = 35
@@ -65,7 +86,6 @@ camera2 = rep.create.camera(focus_distance=focus_distance2, focal_length=focal_l
 render_product1 = rep.create.render_product(camera1, (1024, 1024))
 render_product2 = rep.create.render_product(camera2, (512, 512))
 
-# Function to randomize props (if needed)
 current_object = LUGGAGE_USD # Use raw string for the path
 
 def luggage_props(size=1):
@@ -78,21 +98,14 @@ def luggage_props(size=1):
             rotation=rep.distribution.uniform((-90, -180, 0), (-90, 180, 0)),
         )
     return instances.node
-
-# Function to load and position both objects
+    
 def load_scene():
     luggages()
-
-# Set up the writer to specify the output directory
+    
 writer = rep.WriterRegistry.get("BasicWriter")
-output_dir = r"C:\Users\vipuser\Desktop\generated_dataset"
 writer.initialize(output_dir=output_dir, rgb=True, bounding_box_2d_tight=True)
-writer.attach([render_product1, render_product2])  # Attach both render products
+writer.attach([render_product1, render_product2]) 
 
-# Load the scene
+
 with rep.trigger.on_frame(num_frames=50):
     luggage_props(1)
-# Run the orchestrator
-rep.orchestrator.run()
-
-print(f"Datasets saved to: {output_dir}")
