@@ -99,11 +99,8 @@ writer.initialize(output_dir=output_dir, rgb=True, bounding_box_2d_tight=True)
 writer.attach([render_product1, render_product2])  # Attach both render products
 
 # Load the scene
-load_scene()
-rect_lights(1)
-dome_lights(1)
-cutlery_props(5)
-
+with rep.trigger.on_frame(num_frames=50):
+    cutlery_props(5)
 # Run the orchestrator
 rep.orchestrator.run()
 
