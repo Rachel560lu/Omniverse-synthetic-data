@@ -97,6 +97,7 @@ def load_scene():
 writer = rep.WriterRegistry.get("BasicWriter")
 output_dir = r"C:\Users\vipuser\Desktop\generated_dataset"
 writer.initialize(output_dir=output_dir)
+writer.attach([render_product1])
 
 # Load the scene
 load_scene()
@@ -105,6 +106,6 @@ dome_lights(1)
 cutlery_props(5)
 
 # Run the orchestrator
-#rep.orchestrator.run()
+rep.orchestrator.run()
 
 print(f"Datasets saved to: {output_dir}")
