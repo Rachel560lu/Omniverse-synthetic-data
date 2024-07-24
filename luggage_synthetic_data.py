@@ -3,32 +3,11 @@ import omni.usd
 import omni.kit
 from pxr import Usd, UsdShade, Sdf
 
-LUGGAGE_USD = r"C:\Users\vipuser\Desktop\source\luggage\luggage.usd"  # Converted from luggage.obj to luggage.usd
+LUGGAGE_USD = r"C:\Users\vipuser\Desktop\source\luggage\luggage.usdz"  # Converted from luggage.obj to luggage.usd
 output_dir = r"C:\Users\vipuser\Desktop\generated_dataset"
 
 
-def update_texture_paths(stage, old_path, new_path):
-    for prim in stage.Traverse():
-        if prim.HasAPI(UsdShade.Shader):
-            shader = UsdShade.Shader(prim)
-            for input in shader.GetInputs():
-                if input.GetAttr().GetTypeName() == Sdf.ValueTypeNames.Asset:
-                    attr = input.GetAttr()
-                    current_path = attr.Get()
-                    if old_path in current_path:
-                        new_texture_path = current_path.replace(old_path, new_path)
-                        attr.Set(new_texture_path)
-                        print(f"Updated texture path: {current_path} -> {new_texture_path}")
 
-stage = Usd.Stage.Open(LUGGAGE_USD)
-old_texture_path = r"C:\Users\vipuser\AppData\Local\Temp\5cd98c4eec87f88c\textures"
-new_texture_path = r"C:\Users\vipuser\Desktop\textures"
-update_texture_paths(stage, old_texture_path, new_texture_path)
-stage.GetRootLayer().Save()
-
-
-# Create a new stage
-stage = omni.usd.get_context().new_stage()
 
 # Lightning setup for Rectangular light and Dome light 
 def rect_lights(num=2):
