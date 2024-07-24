@@ -3,9 +3,8 @@ import omni.usd
 import omni.kit
 from pxr import Usd, UsdShade, Sdf
 
-LUGGAGE_USD = r"C:\Users\vipuser\Desktop\source\luggage\luggage.usdz"  # Converted from luggage.obj to luggage.usd
+#LUGGAGE_USD = r"C:\Users\vipuser\Desktop\source\luggage\luggage.usdz"  # Converted from luggage.obj to luggage.usd
 output_dir = r"C:\Users\vipuser\Desktop\generated_dataset"
-
 
 
 
@@ -32,7 +31,7 @@ def dome_lights(num=1):
         count=num
     )
     return lights.node
-    
+
 
 
 # Function to import and position luggages
