@@ -87,3 +87,6 @@ writer.attach([render_product1, render_product2])
 
 with rep.trigger.on_frame(num_frames=50):
     luggage_props(1)
+
+
+rep.orchestrator.run()
