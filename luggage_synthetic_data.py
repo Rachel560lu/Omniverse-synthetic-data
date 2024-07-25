@@ -1,13 +1,31 @@
 import omni.replicator.core as rep
 
 camera_positions = [
-    (-500, 200, -500),
-    (500, 500, 500),
-    (0, 300, 0),
-    (250, 400, -200),
-    (-300, 250, 100)
+    (-1000, 500, -1000),
+    (1000, 1000, 1000),
+    (0, 800, 0),
+    (500, 900, -500),
+    (-700, 600, 200),
+    (300, 200, 700),
+    (-600, 300, -300),
+    (100, 1000, -200),
+    (-400, 500, 400),
+    (800, 800, 800)
+] 
+
+camera_rotations = [
+    (0, 0, 0),
+    (10, 30, 0),
+    (-10, -30, 0),
+    (20, 60, 0),
+    (-20, -60, 0),
+    (15, 45, 0),
+    (-15, -45, 0),
+    (5, 10, 0),
+    (-5, -10, 0),
+    (0, 90, 0)
 ]
-            
+
 # Create a camera with initial setup
 camera = rep.create.camera(focus_distance=200, f_stop=0.5)
 # Create a render product with the camera
@@ -31,7 +49,8 @@ with rep.trigger.on_frame(num_frames=50):
     with camera:
         rep.modify.pose(
             position=rep.distribution.choice(camera_positions),  # Randomize position
-            look_at=(0, 0, 0)  # Assuming the camera looks at the origin (0,0,0)
+            rotation=rep.distribution.choice(camera_rotations),  # Randomize rotation
+           # look_at=(0, 0, 0)  # Assuming the camera looks at the origin (0,0,0)
         )
         
 rep.orchestrator.run()
