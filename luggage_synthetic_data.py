@@ -18,7 +18,7 @@ render_product = rep.create.render_product(camera, (1024, 1024))
 #render_product = rep.create.render_product('/scene/Camera', (512,512))
 
 # Set up the writer to specify the output directory
-output_dir = r"C:\Users\vipuser\Desktop\generated_dataset\test2"
+output_dir = r"C:\Users\vipuser\Desktop\generated_dataset\test3"
 writer = rep.WriterRegistry.get("BasicWriter")
 writer.initialize(output_dir=output_dir, rgb=True, bounding_box_2d_tight=True)
 #writer.attach([render_product1, render_product2]) 
