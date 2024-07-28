@@ -21,8 +21,8 @@ render_product = rep.create.render_product(camera, (1024, 1024))
 
     # Initialize and attach writer for output
 output_dir = r"C:\Users\vipuser\Desktop\generated_dataset\adjusted"
-writer = rep.WriterRegistry.get("BasicWriter")
-writer.initialize(output_dir=output_dir, rgb=True, bounding_box_2d_tight=True)
+writer = rep.WriterRegistry.get("KittiWriter")  # Change BasicWriter to KittiWriter
+writer.initialize(output_dir=output_dir)  # Adjust arguments as needed
 writer.attach([render_product])
 
     # Randomize camera position for each frame using uniform distribution
